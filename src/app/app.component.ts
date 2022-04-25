@@ -27,7 +27,6 @@ export class AppComponent {
         10064, 10065, 10066, 10067, 10068, 10069, 10070, 10071, 10072, 10073,
         10074, 10075, 10076, 10077, 10078, 10079, 10087, 10088, 10089, 10090,
       ],
-      active: false,
     },
     {
       name: 'Alola-Form',
@@ -35,7 +34,6 @@ export class AppComponent {
         10091, 10092, 10100, 10101, 10102, 10103, 10104, 10105, 10106, 10107,
         10108, 10109, 10110, 10111, 10112, 10113, 10114, 10115,
       ],
-      active: false,
     },
     {
       name: 'Galar-Form',
@@ -43,7 +41,6 @@ export class AppComponent {
         10161, 10162, 10163, 10164, 10165, 10166, 10167, 10168, 10169, 10170,
         10171, 10172, 10173, 10174, 10175, 10176, 10177, 10178, 10179, 10180,
       ],
-      active: false,
     },
     {
       name: 'Legendär',
@@ -54,7 +51,6 @@ export class AppComponent {
         788, 789, 790, 791, 792, 793, 800, 888, 889, 891, 892, 894, 895, 896,
         897, 898,
       ],
-      active: false,
     },
     {
       name: 'Mysteriös',
@@ -62,14 +58,20 @@ export class AppComponent {
         151, 251, 385, 386, 489, 490, 491, 492, 493, 494, 647, 648, 649, 719,
         720, 721, 801, 802, 807, 808, 809, 893,
       ],
-      active: true,
     },
     {
       name: 'Ultrabestien',
       ids: [793, 794, 795, 796, 797, 798, 799, 803, 804, 805, 806],
-      active: false,
     },
   ];
+  private selectedPokemonList: any = this.pokemonLists.find(
+    (list: any) => list.name === 'Mysteriös'
+  );
+  private filter: any = {
+    text: '',
+    checked: true,
+    unchecked: true,
+  };
   private checkedPokemon: number[];
   private pokemonList: any[];
 
@@ -97,13 +99,12 @@ export class AppComponent {
 
   private loadPokemonList(): void {
     this.pokemonList = [];
-    let activeList: any = this.pokemonLists.find((list: any) => list.active);
-    if (!activeList) {
+    if (!this.selectedPokemonList) {
       return;
     }
     let requests: Observable<any>[] = [];
-    if (activeList.ids) {
-      for (let id of activeList.ids) {
+    if (this.selectedPokemonList.ids) {
+      for (let id of this.selectedPokemonList.ids) {
         requests.push(
           this.httpClient.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
         );
@@ -113,8 +114,8 @@ export class AppComponent {
       this.httpClient
         .get(
           `https://pokeapi.co/api/v2/pokemon?limit=${
-            activeList.to + 1 - activeList.from
-          }&offset=${activeList.from - 1}`
+            this.selectedPokemonList.to + 1 - this.selectedPokemonList.from
+          }&offset=${this.selectedPokemonList.from - 1}`
         )
         .subscribe((response: any) => {
           for (let pokemon of response.results) {
@@ -224,6 +225,7 @@ export class AppComponent {
   }
 
   private selectPokemonList(list: any): void {
+    console.log(list);
     this.pokemonLists.map((r: any) => {
       r.active = false;
       return r;
@@ -234,5 +236,9 @@ export class AppComponent {
 
   private showPokemonInfo(pokemon: any): void {
     pokemon.name = 'Test';
+  }
+
+  private getCheckedPokemon(): number {
+    return this.pokemonList.filter((poke: any) => poke.checked).length;
   }
 }

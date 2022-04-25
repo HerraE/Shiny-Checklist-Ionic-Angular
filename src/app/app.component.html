@@ -5,20 +5,39 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-chip
+    <ion-searchbar [(ngModel)]="filter.text"></ion-searchbar>
+    <div class="ion-padding">
+      <ion-chip color="primary">
+        <ion-select
+          interface="popover"
+          [(ngModel)]="selectedPokemonList"
+          (ionChange)="selectPokemonList($event)"
+        >
+          <ion-select-option
             *ngFor="let list of pokemonLists; let i = index"
-            (click)="selectPokemonList(list)"
-            color="primary"
-            [outline]="!list.active"
+            [value]="list"
           >
             {{ list.name }}
-          </ion-chip>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+          </ion-select-option>
+        </ion-select>
+      </ion-chip>
+      <ion-chip
+        [color]="filter.checked ? 'primary' : 'light'"
+        (click)="filter.checked = !filter.checked"
+      >
+        <ion-icon class="ion-no-margin" name="checkmark"></ion-icon>
+      </ion-chip>
+      <ion-chip
+        [color]="filter.unchecked ? 'primary' : 'light'"
+        (click)="filter.unchecked = !filter.unchecked"
+      >
+        <ion-icon class="ion-no-margin" name="close"></ion-icon>
+      </ion-chip>
+      <ion-chip style="float: right;">
+        {{ getCheckedPokemon() }} / {{ pokemonList.length }}
+        <!-- <ion-icon name="checkmark"></ion-icon> -->
+      </ion-chip>
+    </div>
     <ion-grid>
       <ion-row>
         <ion-col
@@ -27,7 +46,7 @@
           size-md="3"
           size-sm="4"
           size-xs="6"
-          *ngFor="let pokemon of pokemonList"
+          *ngFor="let pokemon of pokemonList | pokemonFilter: filter"
         >
           <ion-card
             [color]="pokemon.checked ? 'secondary' : 'light'"
