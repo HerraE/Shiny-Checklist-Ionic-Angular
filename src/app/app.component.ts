@@ -171,6 +171,7 @@ export class AppComponent {
         //   });
         forkJoin(requests).subscribe((response: any[]) => {
           this.pokemonList = response.map((res: any) => {
+            console.log(res);
             let pokemon = {
               id: res.id,
               name: res.name,
