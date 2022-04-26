@@ -9,6 +9,39 @@ import { forkJoin, Observable } from 'rxjs';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  private pokemonIcons: any = {
+    ghost:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Pok%C3%A9mon_Ghost_Type_Icon.svg/512px-Pok%C3%A9mon_Ghost_Type_Icon.svg.png?20200511093908',
+    steel:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Pok%C3%A9mon_Steel_Type_Icon.svg/1024px-Pok%C3%A9mon_Steel_Type_Icon.svg.png',
+    fire: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Pok%C3%A9mon_Fire_Type_Icon.svg/640px-Pok%C3%A9mon_Fire_Type_Icon.svg.png',
+    water:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Pok%C3%A9mon_Water_Type_Icon.svg/640px-Pok%C3%A9mon_Water_Type_Icon.svg.png',
+    fighting:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Pok%C3%A9mon_Fighting_Type_Icon.svg/640px-Pok%C3%A9mon_Fighting_Type_Icon.svg.png',
+    electric:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Pok%C3%A9mon_Electric_Type_Icon.svg/640px-Pok%C3%A9mon_Electric_Type_Icon.svg.png',
+    dark: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Pok%C3%A9mon_Dark_Type_Icon.svg/640px-Pok%C3%A9mon_Dark_Type_Icon.svg.png',
+    grass:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Pok%C3%A9mon_Grass_Type_Icon.svg/640px-Pok%C3%A9mon_Grass_Type_Icon.svg.png',
+    fairy:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Pok%C3%A9mon_Fairy_Type_Icon.svg/640px-Pok%C3%A9mon_Fairy_Type_Icon.svg.png',
+    rock: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Pok%C3%A9mon_Rock_Type_Icon.svg/640px-Pok%C3%A9mon_Rock_Type_Icon.svg.png',
+    bug: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Pok%C3%A9mon_Bug_Type_Icon.svg/640px-Pok%C3%A9mon_Bug_Type_Icon.svg.png',
+    psychic:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Pok%C3%A9mon_Psychic_Type_Icon.svg/640px-Pok%C3%A9mon_Psychic_Type_Icon.svg.png',
+    normal:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Pok%C3%A9mon_Normal_Type_Icon.svg/640px-Pok%C3%A9mon_Normal_Type_Icon.svg.png',
+    dragon:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Pok%C3%A9mon_Dragon_Type_Icon.svg/640px-Pok%C3%A9mon_Dragon_Type_Icon.svg.png',
+    ice: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Pok%C3%A9mon_Ice_Type_Icon.svg/640px-Pok%C3%A9mon_Ice_Type_Icon.svg.png',
+    flying:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Pok%C3%A9mon_Flying_Type_Icon.svg/640px-Pok%C3%A9mon_Flying_Type_Icon.svg.png',
+    ground:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Pok%C3%A9mon_Ground_Type_Icon.svg/640px-Pok%C3%A9mon_Ground_Type_Icon.svg.png',
+    poison:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Pok%C3%A9mon_Poison_Type_Icon.svg/640px-Pok%C3%A9mon_Poison_Type_Icon.svg.png',
+  };
   private pokemonLists: any[] = [
     { name: '1. Kanto', from: 1, to: 151, active: false },
     { name: '2. Johto', from: 152, to: 251, active: false },
@@ -45,11 +78,11 @@ export class AppComponent {
     {
       name: 'Legendär',
       ids: [
-        144, 145, 146, 150, 243, 244, 245, 249, 250, 378, 379, 380, 381, 382,
-        383, 384, 480, 481, 482, 483, 484, 485, 486, 487, 488, 638, 639, 640,
-        641, 642, 643, 644, 645, 646, 716, 717, 718, 772, 773, 785, 786, 787,
-        788, 789, 790, 791, 792, 793, 800, 888, 889, 891, 892, 894, 895, 896,
-        897, 898,
+        144, 145, 146, 150, 243, 244, 245, 249, 250, 377, 378, 379, 380, 381,
+        382, 383, 384, 480, 481, 482, 483, 484, 485, 486, 487, 488, 638, 639,
+        640, 641, 642, 643, 644, 645, 646, 716, 717, 718, 772, 773, 785, 786,
+        787, 788, 789, 790, 791, 792, 793, 800, 888, 889, 891, 892, 894, 895,
+        896, 897, 898,
       ],
     },
     {
@@ -171,13 +204,13 @@ export class AppComponent {
         //   });
         forkJoin(requests).subscribe((response: any[]) => {
           this.pokemonList = response.map((res: any) => {
-            console.log(res);
             let pokemon = {
               id: res.id,
               name: res.name,
               checked: this.checkedPokemon.indexOf(res.id) > -1,
               imageUrl:
                 res.sprites.other.home.front_shiny || res.sprites.front_shiny,
+              types: res.types.map((type: any) => type.type.name),
             };
             this.httpClient
               .get(res.species.url)
@@ -226,7 +259,6 @@ export class AppComponent {
   }
 
   private selectPokemonList(list: any): void {
-    console.log(list);
     this.pokemonLists.map((r: any) => {
       r.active = false;
       return r;

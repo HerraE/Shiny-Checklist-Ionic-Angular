@@ -11,7 +11,7 @@ export class PokemonFilter implements PipeTransform {
     }
     let filtered: any[] = pokemon;
     if (args.text && args.text.length) {
-      if (args.text.match(/[0-9]*/)) {
+      if (args.text.match(/[0-9]/)) {
         filtered = pokemon.filter((poke: any) => poke.id == args.text);
       } else {
         filtered = pokemon.filter(

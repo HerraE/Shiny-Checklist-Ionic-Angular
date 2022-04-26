@@ -62,7 +62,15 @@
               <ion-icon name="ellipsis-horizontal" icon-only></ion-icon>
             </ion-button>
             <ion-card-header>
-              <ion-card-subtitle>#{{ pokemon.id }}</ion-card-subtitle>
+              <ion-card-subtitle>
+                #{{ pokemon.id }}
+                <ion-img
+                  *ngFor="let type of pokemon.types"
+                  style="float: right;"
+                  [src]="pokemonIcons[type]"
+                >
+                </ion-img>
+              </ion-card-subtitle>
               <ion-card-title>{{ pokemon.name }}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
