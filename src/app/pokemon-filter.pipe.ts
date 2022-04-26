@@ -10,11 +10,14 @@ export class PokemonFilter implements PipeTransform {
       return pokemon;
     }
     let filtered: any[] = pokemon;
+    filtered = filtered.filter((poke: any) =>
+      poke.types.find((type: string) => args.types[type])
+    );
     if (args.text && args.text.length) {
       if (args.text.match(/[0-9]/)) {
-        filtered = pokemon.filter((poke: any) => poke.id == args.text);
+        filtered = filtered.filter((poke: any) => poke.id == args.text);
       } else {
-        filtered = pokemon.filter(
+        filtered = filtered.filter(
           (poke: any) =>
             poke.name.toLowerCase().indexOf(args.text.toLowerCase()) > -1
         );
@@ -31,7 +34,6 @@ export class PokemonFilter implements PipeTransform {
     } else {
       filtered = filtered.filter((poke: any) => poke.checked === false);
     }
-    console.log(filtered);
     return filtered;
   }
 }

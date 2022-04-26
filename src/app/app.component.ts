@@ -9,38 +9,38 @@ import { forkJoin, Observable } from 'rxjs';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  private pokemonIcons: any = {
-    ghost:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Pok%C3%A9mon_Ghost_Type_Icon.svg/512px-Pok%C3%A9mon_Ghost_Type_Icon.svg.png?20200511093908',
-    steel:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Pok%C3%A9mon_Steel_Type_Icon.svg/1024px-Pok%C3%A9mon_Steel_Type_Icon.svg.png',
+  private pokemonTypes: any = {
+    normal:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Pok%C3%A9mon_Normal_Type_Icon.svg/640px-Pok%C3%A9mon_Normal_Type_Icon.svg.png',
     fire: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Pok%C3%A9mon_Fire_Type_Icon.svg/640px-Pok%C3%A9mon_Fire_Type_Icon.svg.png',
     water:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Pok%C3%A9mon_Water_Type_Icon.svg/640px-Pok%C3%A9mon_Water_Type_Icon.svg.png',
-    fighting:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Pok%C3%A9mon_Fighting_Type_Icon.svg/640px-Pok%C3%A9mon_Fighting_Type_Icon.svg.png',
-    electric:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Pok%C3%A9mon_Electric_Type_Icon.svg/640px-Pok%C3%A9mon_Electric_Type_Icon.svg.png',
-    dark: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Pok%C3%A9mon_Dark_Type_Icon.svg/640px-Pok%C3%A9mon_Dark_Type_Icon.svg.png',
     grass:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Pok%C3%A9mon_Grass_Type_Icon.svg/640px-Pok%C3%A9mon_Grass_Type_Icon.svg.png',
-    fairy:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Pok%C3%A9mon_Fairy_Type_Icon.svg/640px-Pok%C3%A9mon_Fairy_Type_Icon.svg.png',
-    rock: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Pok%C3%A9mon_Rock_Type_Icon.svg/640px-Pok%C3%A9mon_Rock_Type_Icon.svg.png',
-    bug: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Pok%C3%A9mon_Bug_Type_Icon.svg/640px-Pok%C3%A9mon_Bug_Type_Icon.svg.png',
-    psychic:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Pok%C3%A9mon_Psychic_Type_Icon.svg/640px-Pok%C3%A9mon_Psychic_Type_Icon.svg.png',
-    normal:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Pok%C3%A9mon_Normal_Type_Icon.svg/640px-Pok%C3%A9mon_Normal_Type_Icon.svg.png',
-    dragon:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Pok%C3%A9mon_Dragon_Type_Icon.svg/640px-Pok%C3%A9mon_Dragon_Type_Icon.svg.png',
+    electric:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Pok%C3%A9mon_Electric_Type_Icon.svg/640px-Pok%C3%A9mon_Electric_Type_Icon.svg.png',
     ice: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Pok%C3%A9mon_Ice_Type_Icon.svg/640px-Pok%C3%A9mon_Ice_Type_Icon.svg.png',
-    flying:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Pok%C3%A9mon_Flying_Type_Icon.svg/640px-Pok%C3%A9mon_Flying_Type_Icon.svg.png',
-    ground:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Pok%C3%A9mon_Ground_Type_Icon.svg/640px-Pok%C3%A9mon_Ground_Type_Icon.svg.png',
+    fighting:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Pok%C3%A9mon_Fighting_Type_Icon.svg/640px-Pok%C3%A9mon_Fighting_Type_Icon.svg.png',
     poison:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Pok%C3%A9mon_Poison_Type_Icon.svg/640px-Pok%C3%A9mon_Poison_Type_Icon.svg.png',
+    ground:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Pok%C3%A9mon_Ground_Type_Icon.svg/640px-Pok%C3%A9mon_Ground_Type_Icon.svg.png',
+    flying:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Pok%C3%A9mon_Flying_Type_Icon.svg/640px-Pok%C3%A9mon_Flying_Type_Icon.svg.png',
+    psychic:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Pok%C3%A9mon_Psychic_Type_Icon.svg/640px-Pok%C3%A9mon_Psychic_Type_Icon.svg.png',
+    bug: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Pok%C3%A9mon_Bug_Type_Icon.svg/640px-Pok%C3%A9mon_Bug_Type_Icon.svg.png',
+    rock: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Pok%C3%A9mon_Rock_Type_Icon.svg/640px-Pok%C3%A9mon_Rock_Type_Icon.svg.png',
+    ghost:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Pok%C3%A9mon_Ghost_Type_Icon.svg/512px-Pok%C3%A9mon_Ghost_Type_Icon.svg.png?20200511093908',
+    dragon:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Pok%C3%A9mon_Dragon_Type_Icon.svg/640px-Pok%C3%A9mon_Dragon_Type_Icon.svg.png',
+    dark: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Pok%C3%A9mon_Dark_Type_Icon.svg/640px-Pok%C3%A9mon_Dark_Type_Icon.svg.png',
+    steel:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Pok%C3%A9mon_Steel_Type_Icon.svg/1024px-Pok%C3%A9mon_Steel_Type_Icon.svg.png',
+    fairy:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Pok%C3%A9mon_Fairy_Type_Icon.svg/640px-Pok%C3%A9mon_Fairy_Type_Icon.svg.png',
   };
   private pokemonLists: any[] = [
     { name: '1. Kanto', from: 1, to: 151, active: false },
@@ -100,11 +100,7 @@ export class AppComponent {
   private selectedPokemonList: any = this.pokemonLists.find(
     (list: any) => list.name === 'Mysteriös'
   );
-  private filter: any = {
-    text: '',
-    checked: true,
-    unchecked: true,
-  };
+  private filter: any;
   private checkedPokemon: number[];
   private pokemonList: any[];
 
@@ -112,8 +108,37 @@ export class AppComponent {
     private httpClient: HttpClient,
     private loadingController: LoadingController
   ) {
+    this.initFilter();
     this.getCheckedFromLocalStorage();
     this.loadPokemonList();
+  }
+
+  private initFilter(): void {
+    this.filter = {
+      text: '',
+      checked: true,
+      unchecked: true,
+      types: {
+        normal: true,
+        fire: true,
+        water: true,
+        grass: true,
+        electric: true,
+        ice: true,
+        fighting: true,
+        poison: true,
+        ground: true,
+        flying: true,
+        psychic: true,
+        bug: true,
+        rock: true,
+        ghost: true,
+        dragon: true,
+        dark: true,
+        steel: true,
+        fairy: true,
+      },
+    };
   }
 
   private getCheckedFromLocalStorage(): void {
@@ -171,37 +196,6 @@ export class AppComponent {
       .then((data) => {
         loading = data;
         loading.present();
-        // forkJoin(requests).subscribe((response: any[]) => {
-        //   forkJoin(
-        //     response.map((res: any) => this.httpClient.get(res.species.url))
-        //   ).subscribe((speciesResponse: any[]) => {
-        //     let varietiesRequests: Observable<any>[] = [];
-        //     for (let speciesRes of speciesResponse) {
-        //       varietiesRequests = varietiesRequests.concat(
-        //         speciesRes.varieties.map((variety: any) =>
-        //           this.httpClient.get(variety.pokemon.url)
-        //         )
-        //       );
-        //     }
-        //     forkJoin(varietiesRequests).subscribe(
-        //       (varietiesResponse: any[]) => {
-        //         console.log(varietiesResponse);
-        //         this.pokemonList = varietiesResponse.map((varietyRes: any) => {
-        //           console.log(varietyRes);
-        //           return {
-        //             id: varietyRes.id,
-        //             name: speciesResponse.find(
-        //               (speciesRes: any) => speciesRes.id === varietyRes.id
-        //             ),
-        //             checked: this.checkedPokemon.indexOf(varietyRes.id) > -1,
-        //             imageUrl: varietyRes.sprites.other.home.front_shiny || varietyRes.sprites.front_shiny,
-        //           };
-        //         });
-        //         this.pokemonList.sort((a: any, b: any) => a.id - b.id);
-        //         loading.dismiss();
-        //       }
-        //     );
-        //   });
         forkJoin(requests).subscribe((response: any[]) => {
           this.pokemonList = response.map((res: any) => {
             let pokemon = {
@@ -215,27 +209,6 @@ export class AppComponent {
             this.httpClient
               .get(res.species.url)
               .subscribe((speciesResponse: any) => {
-                // let varietiesRequests: Observable<any>[] =
-                //   speciesResponse.varieties.map((variety: any) =>
-                //     this.httpClient.get(variety.pokemon.url)
-                //   );
-                // forkJoin(varietiesRequests).subscribe(
-                //   (varietiesResponse: any[]) => {
-                //     this.pokemonList = this.pokemonList.concat(
-                //       varietiesResponse.map((varietyRes: any) => {
-                //         return {
-                //           id: varietyRes.id,
-                //           name: varietyRes.name,
-                //           checked:
-                //             this.checkedPokemon.indexOf(varietyRes.id) > -1,
-                //           imageUrl:
-                //             varietyRes.sprites.other.home.front_shiny ||
-                //             varietyRes.sprites.front_shiny,
-                //         };
-                //       })
-                //     );
-                //   }
-                // );
                 pokemon.name = speciesResponse.names.find(
                   (name: any) => name.language.name === 'de'
                 ).name;
@@ -265,10 +238,6 @@ export class AppComponent {
     });
     list.active = true;
     this.loadPokemonList();
-  }
-
-  private showPokemonInfo(pokemon: any): void {
-    pokemon.name = 'Test';
   }
 
   private getCheckedPokemon(): number {

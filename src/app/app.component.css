@@ -6,3 +6,11 @@ ion-card-header ion-img {
   width: 18px;
   margin-left: 4px;
 }
+
+ion-chip ion-img {
+  width: 18px;
+}
+
+.type-chip-active ion-img {
+  filter: grayscale(100%);
+}

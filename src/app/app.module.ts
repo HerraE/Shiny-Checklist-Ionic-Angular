@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { ObjectKeysPipe } from './object-keys.pipe';
 import { PokemonFilter } from './pokemon-filter.pipe';
 
 @NgModule({
@@ -14,7 +15,7 @@ import { PokemonFilter } from './pokemon-filter.pipe';
     FormsModule,
     IonicModule.forRoot(),
   ],
-  declarations: [AppComponent, PokemonFilter],
+  declarations: [AppComponent, ObjectKeysPipe, PokemonFilter],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
