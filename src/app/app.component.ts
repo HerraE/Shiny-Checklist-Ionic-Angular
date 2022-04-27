@@ -6,7 +6,7 @@ import { forkJoin, Observable } from 'rxjs';
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   private pokemonTypes: any = {
@@ -101,7 +101,7 @@ export class AppComponent {
     (list: any) => list.name === 'Mysteriös'
   );
   private filter: any;
-  private checkedPokemon: number[];
+  private checkedPokemon: any;
   private pokemonList: any[];
 
   constructor(
@@ -201,7 +201,6 @@ export class AppComponent {
             let pokemon = {
               id: res.id,
               name: res.name,
-              checked: this.checkedPokemon.indexOf(res.id) > -1,
               imageUrl:
                 res.sprites.other.home.front_shiny || res.sprites.front_shiny,
               types: res.types.map((type: any) => type.type.name),
@@ -222,12 +221,16 @@ export class AppComponent {
   }
 
   private checkPokemon(pokemon: any): void {
-    pokemon.checked = !pokemon.checked;
-    if (pokemon.checked) {
-      this.checkedPokemon.push(pokemon.id);
+    if (this.checkPokemon[pokemon.id]) {
+      this.checkedPokemon[pokemon.id]++;
     } else {
-      this.checkedPokemon.splice(this.checkedPokemon.indexOf(pokemon.id), 1);
+      this.checkedPokemon[pokemon.id] = 1;
     }
+    this.saveCheckedToLocalStorage();
+  }
+
+  private uncheckPokemon(pokemon: any): void {
+    delete this.checkedPokemon[pokemon.id];
     this.saveCheckedToLocalStorage();
   }
 

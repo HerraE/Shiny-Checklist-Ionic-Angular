@@ -8,7 +8,7 @@
     <ion-searchbar [(ngModel)]="filter.text"></ion-searchbar>
     <ion-grid>
       <ion-row>
-        <ion-col size="10">
+        <ion-col>
           <ion-chip color="primary">
             <ion-select
               interface="popover"
@@ -36,9 +36,16 @@
             <ion-icon class="ion-no-margin" name="close"></ion-icon>
           </ion-chip>
         </ion-col>
-        <ion-col>
-          <ion-chip style="float: right;">
+        <ion-col size="4">
+          <ion-chip class="amount-chip" style="float: right;">
             {{ getCheckedPokemon() }} / {{ pokemonList.length }}
+          </ion-chip>
+          <ion-chip
+            style="float: right;"
+            color="primary"
+            (click)="initFilter()"
+          >
+            <ion-icon class="ion-no-margin" name="refresh"></ion-icon>
           </ion-chip>
         </ion-col>
       </ion-row>
@@ -51,9 +58,6 @@
             [color]="filter.types[type] ? 'primary' : 'dark'"
           >
             <ion-img [src]="pokemonTypes[type]"></ion-img>
-          </ion-chip>
-          <ion-chip color="primary" (click)="initFilter()">
-            <ion-icon class="ion-no-margin" name="refresh"></ion-icon>
           </ion-chip>
         </ion-col>
       </ion-row>
@@ -69,7 +73,7 @@
           *ngFor="let pokemon of pokemonList | pokemonFilter: filter"
         >
           <ion-card
-            [color]="pokemon.checked ? 'secondary' : 'light'"
+            [color]="checkedPokemon[pokemon.id] ? 'secondary' : 'light'"
             (click)="checkPokemon(pokemon)"
           >
             <ion-card-header>
@@ -85,11 +89,11 @@
               <ion-card-title>
                 {{ pokemon.name }}
                 <ion-badge
-                  *ngIf="pokemon.checked"
+                  *ngIf="checkedPokemon[pokemon.id]"
                   color="light"
                   style="float: right;"
                 >
-                  {{ pokemon.count || 0 }}
+                  {{ checkedPokemon[pokemon.id] }}
                 </ion-badge>
               </ion-card-title>
             </ion-card-header>
