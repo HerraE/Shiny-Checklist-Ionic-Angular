@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { forkJoin, Observable } from 'rxjs';
+import { Pokemon } from './interfaces/pokemon';
 
 @Component({
   selector: 'my-app',
@@ -9,7 +10,7 @@ import { forkJoin, Observable } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  private pokemonTypes: any = {
+  readonly pokemonTypes: any = {
     normal:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Pok%C3%A9mon_Normal_Type_Icon.svg/640px-Pok%C3%A9mon_Normal_Type_Icon.svg.png',
     fire: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Pok%C3%A9mon_Fire_Type_Icon.svg/640px-Pok%C3%A9mon_Fire_Type_Icon.svg.png',
@@ -102,7 +103,7 @@ export class AppComponent {
   );
   private filter: any;
   private checkedPokemon: any;
-  private pokemonList: any[];
+  private pokemonList: Pokemon[];
 
   constructor(
     private httpClient: HttpClient,
@@ -144,8 +145,8 @@ export class AppComponent {
   private getCheckedFromLocalStorage(): void {
     let checked = localStorage.getItem('checked');
     if (!checked) {
-      localStorage.setItem('checked', '[]');
-      this.checkedPokemon = [];
+      localStorage.setItem('checked', '{}');
+      this.checkedPokemon = {};
       return;
     }
     this.checkedPokemon = JSON.parse(checked);
@@ -198,9 +199,10 @@ export class AppComponent {
         loading.present();
         forkJoin(requests).subscribe((response: any[]) => {
           this.pokemonList = response.map((res: any) => {
-            let pokemon = {
+            let pokemon: Pokemon = {
               id: res.id,
               name: res.name,
+              checked: this.checkedPokemon[res.id],
               imageUrl:
                 res.sprites.other.home.front_shiny || res.sprites.front_shiny,
               types: res.types.map((type: any) => type.type.name),
@@ -220,16 +222,12 @@ export class AppComponent {
       });
   }
 
-  private checkPokemon(pokemon: any): void {
-    if (this.checkPokemon[pokemon.id]) {
-      this.checkedPokemon[pokemon.id]++;
-    } else {
-      this.checkedPokemon[pokemon.id] = 1;
-    }
+  private checkPokemon(pokemon: Pokemon): void {
+    this.checkedPokemon[pokemon.id] = pokemon.checked;
     this.saveCheckedToLocalStorage();
   }
 
-  private uncheckPokemon(pokemon: any): void {
+  private uncheckPokemon(pokemon: Pokemon): void {
     delete this.checkedPokemon[pokemon.id];
     this.saveCheckedToLocalStorage();
   }
@@ -244,6 +242,14 @@ export class AppComponent {
   }
 
   private getCheckedPokemon(): number {
-    return this.pokemonList.filter((poke: any) => poke.checked).length;
+    return this.pokemonList.filter(
+      (poke: Pokemon) => poke.checked !== undefined
+    ).length;
+  }
+
+  private getPokemonTypeCount(type: string): number {
+    return this.pokemonList.filter((poke: Pokemon) =>
+      poke.types.find((t: string) => t === type)
+    ).length;
   }
 }

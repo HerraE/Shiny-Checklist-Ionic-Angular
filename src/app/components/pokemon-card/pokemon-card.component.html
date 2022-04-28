@@ -1,0 +1,30 @@
+<ion-card
+  [color]="getColor()"
+  (mousedown)="mousedown($event)"
+  (mouseup)="mouseup($event)"
+>
+  <ion-card-header>
+    <ion-card-subtitle>
+      #{{ pokemon.id }}
+      <ion-img
+        *ngFor="let type of pokemon.types"
+        style="float: right;"
+        [src]="pokemonTypes[type]"
+      >
+      </ion-img>
+    </ion-card-subtitle>
+    <ion-card-title>
+      {{ pokemon.name }}
+      <ion-badge
+        *ngIf="pokemon.checked !== undefined"
+        color="light"
+        style="float: right;"
+      >
+        {{ pokemon.checked }}
+      </ion-badge>
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-img [src]="pokemon.imageUrl"></ion-img>
+  </ion-card-content>
+</ion-card>

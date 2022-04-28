@@ -58,6 +58,9 @@
             [color]="filter.types[type] ? 'primary' : 'dark'"
           >
             <ion-img [src]="pokemonTypes[type]"></ion-img>
+            <ion-label style="margin-left: 5px;">
+              {{ getPokemonTypeCount(type) }}
+            </ion-label>
           </ion-chip>
         </ion-col>
       </ion-row>
@@ -72,35 +75,11 @@
           size-xs="6"
           *ngFor="let pokemon of pokemonList | pokemonFilter: filter"
         >
-          <ion-card
-            [color]="checkedPokemon[pokemon.id] ? 'secondary' : 'light'"
-            (click)="checkPokemon(pokemon)"
-          >
-            <ion-card-header>
-              <ion-card-subtitle>
-                #{{ pokemon.id }}
-                <ion-img
-                  *ngFor="let type of pokemon.types"
-                  style="float: right;"
-                  [src]="pokemonTypes[type]"
-                >
-                </ion-img>
-              </ion-card-subtitle>
-              <ion-card-title>
-                {{ pokemon.name }}
-                <ion-badge
-                  *ngIf="checkedPokemon[pokemon.id]"
-                  color="light"
-                  style="float: right;"
-                >
-                  {{ checkedPokemon[pokemon.id] }}
-                </ion-badge>
-              </ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-img [src]="pokemon.imageUrl"></ion-img>
-            </ion-card-content>
-          </ion-card>
+          <app-pokemon-card
+            [pokemon]="pokemon"
+            (check)="checkPokemon($event)"
+            (uncheck)="uncheckPokemon($event)"
+          ></app-pokemon-card>
         </ion-col>
       </ion-row>
     </ion-grid>
