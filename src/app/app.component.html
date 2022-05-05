@@ -57,8 +57,13 @@
             (click)="filter.types[type] = !filter.types[type]"
             [color]="filter.types[type] ? 'primary' : 'dark'"
           >
-            <ion-img [src]="pokemonTypes[type]"></ion-img>
-            <ion-label style="margin-left: 5px;">
+            <ion-avatar>
+              <ion-img
+                [src]="pokemonTypes[type]"
+                style="width: 100%;"
+              ></ion-img>
+            </ion-avatar>
+            <ion-label>
               {{ getPokemonTypeCount(type) }}
             </ion-label>
           </ion-chip>
